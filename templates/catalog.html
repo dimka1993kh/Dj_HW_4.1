@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Каталог{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="header">
+            <h1><a href="/catalog">Каталог</a></h1>
+        </div>
+
+        <div class="sort-block">
+            <span>Сортровать по: </span>
+            <form method="post">
+                {% csrf_token %}
+                <button class='sort-item' name="sort" value="name">названию</button>
+                <button class='sort-item' name="sort" value="expensive">начиная с дорогих</button>
+                <button class='sort-item' name="sort" value="low_cost">начиная с дешевых</button>
+            </form>
+        </div>
+
+        <div class="content">
+            {% for phone in phones %}
+            <div class="phone">
+                <h1><a href="{% url 'product' phone.slug %}">{{phone.name}}</a></h1>
+                <p class='price'>Стоимость: {{phone.price}}р.</p>
+                <img src="{{phone.image}}" alt="{{phone.name}}">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
